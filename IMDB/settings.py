@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
+    "django_celery_beat",
     "user",
     "movie",
     "rating",
@@ -143,3 +144,6 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+CELERY_BROKER_URL = "memory://"
+CELERY_RESULT_BACKEND = "rpc://"
