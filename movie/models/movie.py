@@ -14,6 +14,13 @@ class MovieManager(models.Manager):
     pass
 
 
+class MovieQuerySet(models.QuerySet):
+    def with_ratings(self):
+        return self.annotate(
+            avg_rating=models.Avg("rating__score"), rating_count=models.Count("rating")
+        )
+
+
 class Movie(models.Model):
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -35,7 +42,7 @@ class Movie(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects: MovieManager = MovieManager()
+    objects: MovieManager = MovieManager.from_queryset(MovieQuerySet)()
 
     def __str__(self):
         return self.title
