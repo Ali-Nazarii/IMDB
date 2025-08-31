@@ -15,6 +15,8 @@ class MovieSerializer(serializers.ModelSerializer):
     genre_ids = serializers.PrimaryKeyRelatedField(
         queryset=Genre.objects.all(), many=True, write_only=True, source="genres"
     )
+    average_rating = serializers.FloatField(read_only=True, source="avg_rating")
+    total_ratings = serializers.IntegerField(read_only=True, source="rating_count")
 
     class Meta:
         model = Movie
@@ -25,6 +27,8 @@ class MovieSerializer(serializers.ModelSerializer):
             "genres",
             "genre_ids",
             "creator",
+            "average_rating",
+            "total_ratings",
             "created_at",
             "updated_at",
         ]

@@ -5,7 +5,7 @@ from .serializers import GenreSerializer, MovieSerializer
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all().prefetch_related("genres")
+    queryset = Movie.objects.all().with_ratings().prefetch_related("genres")
     serializer_class = MovieSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ["title", "genres__name"]
